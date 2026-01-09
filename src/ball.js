@@ -32,6 +32,9 @@ class Ball {
       this.pos.x += this.v.x;
       this.v.y = 0;
       this.pos.y = block.pos.y - this.size / 2;
+      if (block.type === "alive") {
+        block.startConsuming();
+      }
     } else {
       this.pos.add(this.v);
     }

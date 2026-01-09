@@ -10,9 +10,10 @@ class AliveGround {
     this.pos = createVector(x, y);
 
     this.size = size;
-
+    this.type = "alive";
     this.isAlive = true;
     this.liveLeft = ALIVE_BLOCK_DURATION;
+    this.consumeBy = 0;
   }
 
   isOnGround(obj) {
@@ -26,13 +27,16 @@ class AliveGround {
 
     return nearlyEqual(this.pos.y - 1, obj.pos.y + obj.size / 2);
   }
+  startConsuming() {
+    this.consumeBy = 1;
+  }
 
   decreaseLife() {
     if (this.isAlive) {
       if (this.liveLeft === 0) {
         this.isAlive = false;
       } else {
-        this.liveLeft -= 1;
+        this.liveLeft -= this.consumeBy;
       }
     }
   }
@@ -58,6 +62,7 @@ class Ground {
   constructor(x, y, size) {
     this.pos = createVector(x, y);
     this.size = size;
+    this.type = "block";
   }
 
   isOnGround(obj) {
@@ -84,6 +89,8 @@ class SpikesGround {
   constructor(x, y, size) {
     this.pos = createVector(x, y);
     this.size = size;
+
+    this.type = "spike";
   }
 
   isOnGround(obj) {
