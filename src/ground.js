@@ -2,7 +2,7 @@ const isBetween = (min, val, max) => {
   return min < val && val < max;
 };
 const nearlyEqual = (a, b) => {
-  return Math.abs(a - b) < 5;
+  return Math.abs(a - b) < 5 * SCREEN_SPEED;
 };
 
 class AliveGround {
@@ -36,12 +36,18 @@ class AliveGround {
       }
     }
   }
+  update() {
+    this.pos.y -= SCREEN_SPEED;
+  }
 
   draw() {
     if (this.isAlive) {
       push();
       translate(this.pos.x, this.pos.y);
-      stroke(1);
+      const color = ((ALIVE_BLOCK_DURATION - this.liveLeft) /
+        ALIVE_BLOCK_DURATION) * 150;
+      stroke(color);
+
       rect(0, 0, this.size, 4);
       pop();
     }
@@ -60,6 +66,9 @@ class Ground {
     }
 
     return nearlyEqual(this.pos.y - 1, obj.pos.y + obj.size / 2);
+  }
+  update() {
+    this.pos.y -= SCREEN_SPEED;
   }
 
   draw() {
@@ -83,6 +92,9 @@ class SpikesGround {
     }
 
     return nearlyEqual(this.pos.y - 1, obj.pos.y + obj.size / 2);
+  }
+  update() {
+    this.pos.y -= SCREEN_SPEED;
   }
 
   draw() {

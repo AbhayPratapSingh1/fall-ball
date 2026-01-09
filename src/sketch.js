@@ -51,9 +51,13 @@ function draw() {
 
   ground.map((each) => each.draw());
   aliveGround.map((each) => each.draw());
-  aliveGround.map((each) => each.decreaseLife());
-
   spikes.map((each) => each.draw());
+
+  ground.map((each) => each.update());
+  aliveGround.map((each) => each.update());
+  spikes.map((each) => each.update());
+
+  aliveGround.map((each) => each.decreaseLife());
 
   if (ball.isGameOver()) {
     background(1);
