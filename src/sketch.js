@@ -13,10 +13,12 @@ function setup() {
   createCanvas(400, 800);
   ball = new Ball(100, 30, 5);
   ground = new Ground(200, 500, 100);
-  ground2 = new Ground(100, 300, 100, "alive");
+  ground2 = new AliveGround(100, 300, 100);
+  ground3 = new SpikesGround(300, 500, 100);
 
   ball.blocks.push(ground);
   ball.blocks.push(ground2);
+  ball.spikesBlocks.push(ground3);
 }
 
 function draw() {
@@ -26,7 +28,11 @@ function draw() {
   ball.update();
   ground.draw();
   ground2.draw();
+  ground3.draw();
 
-  ground.decreaseLife();
   ground2.decreaseLife();
+  if (ball.isGameOver()) {
+    background(1);
+    noLoop();
+  }
 }

@@ -4,13 +4,24 @@ class Ball {
     this.v = createVector(0, 0);
     this.gravity = createVector(0, GRAVITY);
     this.size = size;
+
     this.blocks = [];
+    this.spikesBlocks = [];
     this.frictionCofficient = FRICTION_COFFICIENT;
   }
 
   applyGravity() {
     this.v.add(this.gravity);
     this.v.y = Math.min(MAX_VELOCITY, this.v.y);
+  }
+
+  isGameOver() {
+    if (this.pos.y < 10 || this.pos.y > height) {
+      return true;
+    }
+    const v = this.spikesBlocks.some((block) => block.isOnGround(this));
+
+    return this.spikesBlocks.some((block) => block.isOnGround(this));
   }
 
   update() {

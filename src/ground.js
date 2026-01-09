@@ -5,12 +5,12 @@ const nearlyEqual = (a, b) => {
   return Math.abs(a - b) < 5;
 };
 
-class Ground {
-  constructor(x, y, size, type = "solid") {
+class AliveGround {
+  constructor(x, y, size) {
     this.pos = createVector(x, y);
 
     this.size = size;
-    this.type = type;
+
     this.isAlive = true;
     this.liveLeft = ALIVE_BLOCK_DURATION;
   }
@@ -28,7 +28,7 @@ class Ground {
   }
 
   decreaseLife() {
-    if (this.isAlive && this.type === "alive") {
+    if (this.isAlive) {
       if (this.liveLeft === 0) {
         this.isAlive = false;
       } else {
@@ -36,6 +36,7 @@ class Ground {
       }
     }
   }
+
   draw() {
     if (this.isAlive) {
       push();
@@ -44,5 +45,51 @@ class Ground {
       rect(0, 0, this.size, 4);
       pop();
     }
+  }
+}
+
+class Ground {
+  constructor(x, y, size) {
+    this.pos = createVector(x, y);
+    this.size = size;
+  }
+
+  isOnGround(obj) {
+    if (!isBetween(this.pos.x, obj.pos.x, this.pos.x + this.size)) {
+      return false;
+    }
+
+    return nearlyEqual(this.pos.y - 1, obj.pos.y + obj.size / 2);
+  }
+
+  draw() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    stroke(1);
+    rect(0, 0, this.size, 4);
+    pop();
+  }
+}
+
+class SpikesGround {
+  constructor(x, y, size) {
+    this.pos = createVector(x, y);
+    this.size = size;
+  }
+
+  isOnGround(obj) {
+    if (!isBetween(this.pos.x, obj.pos.x, this.pos.x + this.size)) {
+      return false;
+    }
+
+    return nearlyEqual(this.pos.y - 1, obj.pos.y + obj.size / 2);
+  }
+
+  draw() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    stroke(255, 0, 0);
+    rect(0, 0, this.size, 4);
+    pop();
   }
 }
