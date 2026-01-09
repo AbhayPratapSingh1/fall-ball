@@ -4,10 +4,19 @@
 const GRAVITY = 0.1;
 const MAX_VELOCITY = 5;
 const FRICTION_COFFICIENT = 0.05;
+const ALIVE_BLOCK_DURATION = 100;
+
 let ball;
+let ground;
+let ground2;
 function setup() {
   createCanvas(400, 800);
   ball = new Ball(100, 30, 5);
+  ground = new Ground(200, 500, 100);
+  ground2 = new Ground(100, 300, 100, "alive");
+
+  ball.blocks.push(ground);
+  ball.blocks.push(ground2);
 }
 
 function draw() {
@@ -15,4 +24,9 @@ function draw() {
 
   ball.draw();
   ball.update();
+  ground.draw();
+  ground2.draw();
+
+  ground.decreaseLife();
+  ground2.decreaseLife();
 }

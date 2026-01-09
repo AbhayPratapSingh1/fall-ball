@@ -15,9 +15,16 @@ class Ball {
 
   update() {
     this.applyGravity();
-    if (!(this.blocks.some((each) => each.aboveBox(this.pos)))) {
+    const block = this.blocks.find((each) => each.isOnGround(this));
+
+    if (block) {
+      this.pos.x += this.v.x;
+      this.v.y = 0;
+      this.pos.y = block.pos.y - this.size / 2;
+    } else {
       this.pos.add(this.v);
     }
+
     this.action();
 
     // managing the friction
