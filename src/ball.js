@@ -66,10 +66,10 @@ class Ball {
 
   action() {
     if (keyIsDown(RIGHT_ARROW)) {
-      this.v.x += 1;
+      this.v.x += SENSITVITY;
     }
     if (keyIsDown(LEFT_ARROW)) {
-      this.v.x -= 1;
+      this.v.x -= SENSITVITY;
     }
     if (this.v.x > 0) {
       this.v.x = Math.min(this.v.x, MAX_VELOCITY);

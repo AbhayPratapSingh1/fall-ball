@@ -7,8 +7,9 @@ const FRICTION_COFFICIENT = 0.05;
 const ALIVE_BLOCK_DURATION = 100;
 
 let SCREEN_SPEED = 1;
+let SENSITVITY = 1;
 
-let STATUS = "playing";
+let STATUS = "start";
 let GAME_OBJECTS = null;
 
 function setup() {

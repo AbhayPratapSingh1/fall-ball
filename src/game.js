@@ -4,6 +4,7 @@ const ALIVE_PROB = 1;
 const BLOCK_SIZE = 100;
 const CHACE_TO_GEN_BLOCK = 0.002;
 
+
 const createGrounds = () => {
   const ground = [];
   ground.push(new Ground(200, 500, 100));
@@ -67,8 +68,8 @@ const generateBlocks = () => {
 let increasingFactor = 0;
 
 const playing = () => {
-  if ((Math.floor(GAME_OBJECTS.score % 100)) === 0) {
-    SCREEN_SPEED += 0.05;
+  if (round(GAME_OBJECTS.score, 1) % 100 === 0) {
+    SCREEN_SPEED += 0.5;
   }
   frameRate(60);
   background(220);
