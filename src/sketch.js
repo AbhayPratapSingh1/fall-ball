@@ -7,6 +7,8 @@ const FRICTION_COFFICIENT = 0.05;
 const ALIVE_BLOCK_DURATION = 100;
 const SCREEN_SPEED = 1;
 
+let STATUS = "end";
+
 let ball;
 
 const createGrounds = () => {
@@ -51,7 +53,24 @@ function setup() {
   spikes.map((ground) => ball.spikesBlocks.push(ground));
 }
 
-function draw() {
+const start = () => {
+  background(220);
+  textSize(50);
+  text("hello", 0, 30, 100, 100);
+  textSize(20);
+  text("Please Design this page", 0, 100, 1000, 100);
+
+  push();
+  textAlign("center");
+  textSize(30);
+  text("<--Press Enter to Start-->", 0, 150, width, 100);
+  pop();
+  if (keyIsDown(ENTER)) {
+    STATUS = "playing";
+  }
+};
+
+const playing = () => {
   background(220);
 
   ball.draw();
@@ -68,7 +87,34 @@ function draw() {
   aliveGround.map((each) => each.decreaseLife());
 
   if (ball.isGameOver()) {
-    background(1);
-    noLoop();
+    STATUS = "end";
   }
+};
+
+const end = () => {
+  background(220);
+  textSize(50);
+  text("Game Over", 0, 30, 500, 200);
+  textSize(20);
+
+  text("Please Help To Design this page", 0, 100, 1000, 100);
+
+  push();
+  textAlign("center");
+  textSize(30);
+  text("<--Press Enter to Start-->", 0, 150, width, 100);
+  pop();
+  if (keyIsDown(ENTER)) {
+    STATUS = "playing";
+  }
+};
+
+const modes = {
+  start,
+  playing,
+  end,
+};
+
+function draw() {
+  modes[STATUS]();
 }
