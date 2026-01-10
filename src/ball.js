@@ -6,6 +6,7 @@ class Ball {
     this.size = size;
 
     this.blocks = [];
+    this.aliveBlocks = [];
     this.spikesBlocks = [];
     this.frictionCofficient = FRICTION_COFFICIENT;
   }
@@ -26,7 +27,10 @@ class Ball {
 
   update() {
     this.applyGravity();
-    const block = this.blocks.find((each) => each.isOnGround(this));
+    let block = this.blocks.find((each) => each.isOnGround(this));
+    if (!block) {
+      block = this.aliveBlocks.find((each) => each.isOnGround(this));
+    }
 
     if (block) {
       this.pos.x += this.v.x;
