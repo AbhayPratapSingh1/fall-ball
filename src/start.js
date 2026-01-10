@@ -12,6 +12,7 @@ const start = () => {
   text("<--Press Enter to Start-->", 0, 150, width, 100);
   pop();
   if (keyIsDown(ENTER)) {
+    SCREEN_SPEED = 1;
     GAME_OBJECTS = createGame();
     STATUS = "playing";
   }

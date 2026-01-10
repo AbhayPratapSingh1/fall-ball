@@ -2,7 +2,7 @@ const NORMAL_PROB = 2;
 const SPIKE_PROB = 1;
 const ALIVE_PROB = 1;
 const BLOCK_SIZE = 100;
-const CHACE_TO_GEN_BLOCK = 0.005;
+const CHACE_TO_GEN_BLOCK = 0.002;
 
 const createGrounds = () => {
   const ground = [];
@@ -46,32 +46,41 @@ const showScore = (score) => {
 };
 
 const generateBlocks = () => {
-  const changeToGenerate = random(0, 1 / CHACE_TO_GEN_BLOCK);
-  if (changeToGenerate < 1) {
-    const chance = random(0, NORMAL_PROB + SPIKE_PROB + ALIVE_PROB);
-    const x = random(0, width - BLOCK_SIZE);
-    let block;
-    let type = "blocks";
-    if (chance < NORMAL_PROB) {
-      block = new Ground(x, height, BLOCK_SIZE);
-    } else if (chance < SPIKE_PROB + NORMAL_PROB) {
-      block = new SpikesGround(x, height, BLOCK_SIZE);
-      type = "spikesBlocks";
-    } else {
-      block = new AliveGround(x, height, BLOCK_SIZE);
-      type = "aliveBlocks";
-    }
-
-    GAME_OBJECTS.ball[type].push(block);
-    GAME_OBJECTS[type].push(block);
+  const chance = random(0, NORMAL_PROB + SPIKE_PROB + ALIVE_PROB);
+  const x = random(0, width - BLOCK_SIZE);
+  let block;
+  let type = "blocks";
+  if (chance < NORMAL_PROB) {
+    block = new Ground(x, height, BLOCK_SIZE);
+  } else if (chance < SPIKE_PROB + NORMAL_PROB) {
+    block = new SpikesGround(x, height, BLOCK_SIZE);
+    type = "spikesBlocks";
+  } else {
+    block = new AliveGround(x, height, BLOCK_SIZE);
+    type = "aliveBlocks";
   }
+
+  GAME_OBJECTS.ball[type].push(block);
+  GAME_OBJECTS[type].push(block);
 };
 
+let increasingFactor = 0;
+
 const playing = () => {
+  if ((Math.floor(GAME_OBJECTS.score % 100)) === 0) {
+    SCREEN_SPEED += 0.05;
+  }
   frameRate(60);
   background(220);
   showScore(GAME_OBJECTS.score);
-  generateBlocks();
+  let totalChance = increasingFactor + CHACE_TO_GEN_BLOCK;
+
+  if (random(0, 1 / totalChance) < 2) {
+    generateBlocks();
+    increasingFactor = 0;
+  } else {
+    increasingFactor += 0.0001;
+  }
 
   GAME_OBJECTS.ball.draw();
   GAME_OBJECTS.ball.update();
