@@ -1,9 +1,3 @@
-const NORMAL_PROB = 1;
-const SPIKE_PROB = 1;
-const ALIVE_PROB = 1;
-const BLOCK_SIZE = 100;
-const CHACE_TO_GEN_BLOCK = 0.002;
-
 const createGame = () => {
   const ball = new Ball(100, 30, 10);
 
@@ -83,10 +77,6 @@ const playing = () => {
   background(220);
   fill(1);
 
-  showScore(GAME_OBJECTS.score);
-  downwardSpikes();
-  upwardSpikes();
-
   // game Utility
   if (round(GAME_OBJECTS.score, 1) % 100 === 0) {
     SCREEN_SPEED += 0.5;
@@ -110,6 +100,14 @@ const playing = () => {
     STATUS = "end";
     return;
   }
+
+  showScore(GAME_OBJECTS.score);
+  downwardSpikes();
+
+  push();
+  translate(0, height);
+  upwardSpikes();
+  pop();
 
   GAME_OBJECTS.score += 0.1;
 };

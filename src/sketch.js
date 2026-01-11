@@ -13,6 +13,13 @@ let SENSITVITY = 1;
 let STATUS = "playing";
 let GAME_OBJECTS = null;
 
+// Playing Game Constants
+const NORMAL_PROB = 1;
+const SPIKE_PROB = 1;
+const ALIVE_PROB = 1;
+const BLOCK_SIZE = 100;
+const CHACE_TO_GEN_BLOCK = 0.002;
+
 function setup() {
   GAME_OBJECTS = createGame();
   createCanvas(400, 800);
