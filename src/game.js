@@ -4,7 +4,6 @@ const ALIVE_PROB = 1;
 const BLOCK_SIZE = 100;
 const CHACE_TO_GEN_BLOCK = 0.002;
 
-
 const createGrounds = () => {
   const ground = [];
   ground.push(new Ground(200, 500, 100));
@@ -24,7 +23,7 @@ const createSpikes = () => {
 };
 
 const createGame = () => {
-  const ball = new Ball(100, 30, 5);
+  const ball = new Ball(100, 30, 20);
 
   const blocks = createGrounds();
   const aliveBlocks = createAliveGround();
@@ -67,7 +66,31 @@ const generateBlocks = () => {
 
 let increasingFactor = 0;
 
+const drawUpperWire = () => {
+  noStroke();
+  fill("grey");
+  push();
+  const size = SPIKES_HEIGHT;
+  for (let index = -size; index < width; index += size) {
+    triangle(index, 0, index + size * 2, 0, index + size, size);
+  }
+  pop();
+};
+
+const drawLowerWire = () => {
+  noStroke();
+  fill("grey");
+  push();
+  translate(0, height);
+  const size = SPIKES_HEIGHT;
+  for (let index = -size; index < width; index += size) {
+    triangle(index, 0, index + size * 2, 0, index + size, -size);
+  }
+  pop();
+};
+
 const playing = () => {
+  fill(1);
   if (round(GAME_OBJECTS.score, 1) % 100 === 0) {
     SCREEN_SPEED += 0.5;
   }
@@ -87,8 +110,11 @@ const playing = () => {
   GAME_OBJECTS.ball.update();
 
   GAME_OBJECTS.blocks.forEach((each) => each.draw());
+  fill(100);
   GAME_OBJECTS.aliveBlocks.forEach((each) => each.draw());
+  fill(255, 0, 0);
   GAME_OBJECTS.spikesBlocks.forEach((each) => each.draw());
+  fill(1);
 
   GAME_OBJECTS.blocks.forEach((each) => each.update());
   GAME_OBJECTS.aliveBlocks.forEach((each) => each.update());
@@ -100,5 +126,8 @@ const playing = () => {
     STATUS = "end";
     return;
   }
+  drawUpperWire();
+  drawLowerWire();
+
   GAME_OBJECTS.score += 0.1;
 };

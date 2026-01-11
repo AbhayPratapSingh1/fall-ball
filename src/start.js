@@ -22,6 +22,7 @@ const start = () => {
   }
 
   if (keyIsDown(ENTER)) {
+    
     SCREEN_SPEED = 1;
     GAME_OBJECTS = createGame();
     STATUS = "playing";
