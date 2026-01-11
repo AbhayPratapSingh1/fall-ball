@@ -23,7 +23,7 @@ const createSpikes = () => {
 };
 
 const createGame = () => {
-  const ball = new Ball(100, 30, 20);
+  const ball = new Ball(100, 30, 10);
 
   const blocks = createGrounds();
   const aliveBlocks = createAliveGround();
@@ -33,6 +33,7 @@ const createGame = () => {
   aliveBlocks.map((ground) => ball.aliveBlocks.push(ground));
   spikesBlocks.map((ground) => ball.spikesBlocks.push(ground));
   let score = 0;
+
   return { ball, blocks, aliveBlocks, spikesBlocks, score };
 };
 
@@ -66,36 +67,39 @@ const generateBlocks = () => {
 
 let increasingFactor = 0;
 
-const drawUpperWire = () => {
+const downwardSpikes = (size = SPIKES_HEIGHT, length = width) => {
   noStroke();
   fill("grey");
   push();
-  const size = SPIKES_HEIGHT;
-  for (let index = -size; index < width; index += size) {
+
+  for (let index = -size; index < length; index += size) {
     triangle(index, 0, index + size * 2, 0, index + size, size);
   }
   pop();
 };
 
-const drawLowerWire = () => {
+const upwardSpikes = (size = SPIKES_HEIGHT, length = width, color = "grey") => {
   noStroke();
-  fill("grey");
+  fill(color);
+
   push();
-  translate(0, height);
-  const size = SPIKES_HEIGHT;
-  for (let index = -size; index < width; index += size) {
+
+  for (let index = -size; index < length; index += size) {
     triangle(index, 0, index + size * 2, 0, index + size, -size);
   }
   pop();
 };
 
 const playing = () => {
+  frameRate(60);
+  background(220);
+
   fill(1);
+
   if (round(GAME_OBJECTS.score, 1) % 100 === 0) {
     SCREEN_SPEED += 0.5;
   }
-  frameRate(60);
-  background(220);
+
   showScore(GAME_OBJECTS.score);
   let totalChance = increasingFactor + CHACE_TO_GEN_BLOCK;
 
@@ -106,28 +110,26 @@ const playing = () => {
     increasingFactor += 0.0001;
   }
 
+  // draw logic here
   GAME_OBJECTS.ball.draw();
-  GAME_OBJECTS.ball.update();
-
   GAME_OBJECTS.blocks.forEach((each) => each.draw());
-  fill(100);
   GAME_OBJECTS.aliveBlocks.forEach((each) => each.draw());
-  fill(255, 0, 0);
   GAME_OBJECTS.spikesBlocks.forEach((each) => each.draw());
-  fill(1);
 
+  // update logic here
+  GAME_OBJECTS.ball.update();
   GAME_OBJECTS.blocks.forEach((each) => each.update());
   GAME_OBJECTS.aliveBlocks.forEach((each) => each.update());
   GAME_OBJECTS.spikesBlocks.forEach((each) => each.update());
-
-  GAME_OBJECTS.aliveBlocks.forEach((each) => each.decreaseLife());
-
+  
+  
+  
   if (GAME_OBJECTS.ball.isGameOver()) {
     STATUS = "end";
     return;
   }
-  drawUpperWire();
-  drawLowerWire();
+  downwardSpikes();
+  upwardSpikes();
 
   GAME_OBJECTS.score += 0.1;
 };

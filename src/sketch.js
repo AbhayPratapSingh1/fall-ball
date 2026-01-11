@@ -10,7 +10,7 @@ const SPIKES_HEIGHT = 14;
 let SCREEN_SPEED = 1;
 let SENSITVITY = 1;
 
-let STATUS = "start";
+let STATUS = "playing";
 let GAME_OBJECTS = null;
 
 function setup() {
@@ -26,4 +26,5 @@ const modes = {
 
 function draw() {
   modes[STATUS]();
+  // noLoop();
 }

@@ -46,11 +46,13 @@ class AliveGround {
 
   draw() {
     if (this.isAlive) {
+      this.decreaseLife();
       push();
+
       translate(this.pos.x, this.pos.y);
-      const color = ((ALIVE_BLOCK_DURATION - this.liveLeft) /
-        ALIVE_BLOCK_DURATION) * 150;
-      stroke(color);
+      const color = 100 + (((ALIVE_BLOCK_DURATION - this.liveLeft) /
+        ALIVE_BLOCK_DURATION) * 100);
+      fill(color);
 
       rect(0, 0, this.size, 4);
       pop();
@@ -78,6 +80,7 @@ class Ground {
 
   draw() {
     push();
+    fill(1);
     translate(this.pos.x, this.pos.y);
     stroke(1);
     rect(0, 0, this.size, 4);
@@ -106,9 +109,11 @@ class SpikesGround {
 
   draw() {
     push();
-    translate(this.pos.x, this.pos.y);
+
+    translate(this.pos.x + 8, this.pos.y + 4);
+    upwardSpikes(7, this.size - 16, "red");
+
     stroke(255, 0, 0);
-    rect(0, 0, this.size, 4);
     pop();
   }
 }

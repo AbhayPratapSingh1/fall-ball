@@ -79,6 +79,7 @@ class Ball {
   }
 
   draw() {
+    fill(0, 0, 200);
     circle(this.pos.x, this.pos.y, this.size);
     stroke(1);
   }

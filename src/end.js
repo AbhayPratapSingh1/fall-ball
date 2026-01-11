@@ -2,6 +2,7 @@ const end = () => {
   frameRate(10);
   background(220);
   textSize(50);
+  fill(1);
   text("Game Over", 0, 30, 500, 200);
   textSize(20);
 
