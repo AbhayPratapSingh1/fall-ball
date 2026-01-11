@@ -10,7 +10,7 @@ const SPIKES_HEIGHT = 14;
 let SCREEN_SPEED = 1;
 let SENSITVITY = 1;
 
-let STATUS = "playing";
+let STATUS = "start";
 let GAME_OBJECTS = null;
 
 // Playing Game Constants
@@ -31,7 +31,13 @@ const modes = {
   end,
 };
 
+const drawBrickHorizontal = (length) => {
+  rect(0, 0, length, length / 2);
+};
+const drawBrickVertical = (length) => {
+  rect(0, 0, length / 2, length);
+};
+
 function draw() {
   modes[STATUS]();
-  // noLoop();
 }
